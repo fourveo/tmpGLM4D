@@ -1,4 +1,5 @@
 #pragma once
+#include "vec2.hpp"
 
 namespace glm
 {
@@ -18,20 +19,57 @@ namespace glm
 		vec3_T(const vec3_T& v) : x(v.x), y(v.y), z(v.z) {}
 		explicit vec3_T(T _a) : vec3_T(_a, _a, _a) {}
 		template <typename T> explicit vec3_T(const vec3_T<T>& p) : x(T(p.x)), y(T(p.y)), z(T(p.z)) {}
+		template <typename T> explicit vec3_T(const vec2_T<T>& p, T _z) : x(T(p.x)), y(T(p.y)), z(T(_z)) {}
 		template <typename P> explicit vec3_T(const P& p) : x((T)p.x), y((T)p.y), z((T)p.z) {}
 
 		size_t length() const { return 3; }
 
-		vec3_T operator - () const { vec3_T r; r.x = -x; r.y = -y; r.z = -z; return r; }
+		vec3_T<T> operator - () const { vec3_T r; r.x = -this->x; r.y = -this->y; r.z = -this->z; return r; }
 
-		vec3_T operator + (const vec3_T& p) const { vec3_T r; r.x = x + p.x; r.y = y + p.y; r.z = z + p.z;	return r; }
-		vec3_T operator - (const vec3_T& p) const { vec3_T r; r.x = x - p.x; r.y = y - p.y; r.z = z - p.z;	return r; }
-		vec3_T operator * (const vec3_T& p) const { vec3_T r; r.x = x * p.x; r.y = y * p.y; r.z = z * p.z;	return r; }
-		vec3_T operator / (const vec3_T& p) const { vec3_T r; r.x = x / p.x; r.y = y / p.y; r.z = z / p.z;	return r; }
-		vec3_T operator + (const T     v) const { vec3_T r; r.x = x + v;   r.y = y + v;   r.z = z + v;	    return r; }
-		vec3_T operator - (const T     v) const { vec3_T r; r.x = x - v;   r.y = y - v;   r.z = z - v;	    return r; }
-		vec3_T operator * (const T     v) const { vec3_T r; r.x = x * v;   r.y = y * v;   r.z = z * v;	    return r; }
-		vec3_T operator / (const T     v) const { vec3_T r; r.x = x / v;   r.y = y / v;   r.z = z / v;	    return r; }
+		vec3_T<T> operator + (const vec3_T<T>& p)	const { vec3_T<T> r; r.x = this->x + p.x; r.y = this->y + p.y; r.z = this->z + p.z;		return r; }
+		vec3_T<T> operator - (const vec3_T<T>& p)	const { vec3_T<T> r; r.x = this->x - p.x; r.y = this->y - p.y; r.z = this->z - p.z;		return r; }
+		vec3_T<T> operator * (const vec3_T<T>& p)	const { vec3_T<T> r; r.x = this->x * p.x; r.y = this->y * p.y; r.z = this->z * p.z;		return r; }
+		vec3_T<T> operator / (const vec3_T<T>& p)	const { vec3_T<T> r; r.x = this->x / p.x; r.y = this->y / p.y; r.z = this->z / p.z;		return r; }
+		vec3_T<T> operator + (const T     v)		const { vec3_T<T> r; r.x = this->x + v;   r.y = this->y + v;   r.z = this->z + v;	    return r; }
+		vec3_T<T> operator - (const T     v)		const { vec3_T<T> r; r.x = this->x - v;   r.y = this->y - v;   r.z = this->z - v;	    return r; }
+		vec3_T<T> operator * (const T     v)		const { vec3_T<T> r; r.x = this->x * v;   r.y = this->y * v;   r.z = this->z * v;	    return r; }
+		vec3_T<T> operator / (const T     v)		const { vec3_T<T> r; r.x = this->x / v;   r.y = this->y / v;   r.z = this->z / v;	    return r; }
+
+		template <typename U>
+		vec3_T<T> operator + (const vec3_T<U>& p) const
+		{
+			return vec3_T<T>(
+				this->x + static_cast<T>(p.x),
+				this->y + static_cast<T>(p.y),
+				this->z + static_cast<T>(p.z));
+		}
+
+		template <typename U>
+		vec3_T<T> operator - (const vec3_T<U>& p) const
+		{
+			return vec3_T<T>(
+				this->x - static_cast<T>(p.x),
+				this->y - static_cast<T>(p.y),
+				this->z - static_cast<T>(p.z));
+		}
+
+		template <typename U>
+		vec3_T<T> operator * (const vec3_T<U>& p) const
+		{
+			return vec3_T<T>(
+				this->x * static_cast<T>(p.x),
+				this->y * static_cast<T>(p.y),
+				this->z * static_cast<T>(p.z));
+		}
+
+		template <typename U>
+		vec3_T<T> operator / (const vec3_T<U>& p) const
+		{
+			return vec3_T<T>(
+				this->x / static_cast<T>(p.x),
+				this->y / static_cast<T>(p.y),
+				this->z / static_cast<T>(p.z));
+		}
 
 		T& operator [] (size_t i)
 		{

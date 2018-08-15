@@ -21,16 +21,48 @@ namespace glm
 
 		size_t length() const { return 2; }
 
-		vec2_T operator - () const { vec2_T r; r.x = -x; r.y = -y; return r; }
+		vec2_T<T> operator - () const { vec2_T<T> r; r.x = -this->x; r.y = -this->y; return r; }
 
-		vec2_T operator + (const vec2_T& p) const { vec2_T r; r.x = x + p.x; r.y = y + p.y;	return r; }
-		vec2_T operator - (const vec2_T& p) const { vec2_T r; r.x = x - p.x; r.y = y - p.y;	return r; }
-		vec2_T operator * (const vec2_T& p) const { vec2_T r; r.x = x * p.x; r.y = y * p.y;	return r; }
-		vec2_T operator / (const vec2_T& p) const { vec2_T r; r.x = x / p.x; r.y = y / p.y;	return r; }
-		vec2_T operator + (const T     v)	const { vec2_T r; r.x = x + v;   r.y = y + v;   return r; }
-		vec2_T operator - (const T     v)	const { vec2_T r; r.x = x - v;   r.y = y - v;   return r; }
-		vec2_T operator * (const T     v)	const { vec2_T r; r.x = x * v;   r.y = y * v;   return r; }
-		vec2_T operator / (const T     v)	const { vec2_T r; r.x = x / v;   r.y = y / v;   return r; }
+		vec2_T<T> operator + (const vec2_T<T>& p)	const { vec2_T<T> r; r.x = this->x + p.x; r.y = this->y + p.y;	return r; }
+		vec2_T<T> operator - (const vec2_T<T>& p)	const { vec2_T<T> r; r.x = this->x - p.x; r.y = this->y - p.y;	return r; }
+		vec2_T<T> operator * (const vec2_T<T>& p)	const { vec2_T<T> r; r.x = this->x * p.x; r.y = this->y * p.y;	return r; }
+		vec2_T<T> operator / (const vec2_T<T>& p)	const { vec2_T<T> r; r.x = this->x / p.x; r.y = this->y / p.y;	return r; }
+		vec2_T<T> operator + (const T     v)		const { vec2_T<T> r; r.x = this->x + v;   r.y = this->y + v;	return r; }
+		vec2_T<T> operator - (const T     v)		const { vec2_T<T> r; r.x = this->x - v;   r.y = this->y - v;	return r; }
+		vec2_T<T> operator * (const T     v)		const { vec2_T<T> r; r.x = this->x * v;   r.y = this->y * v;	return r; }
+		vec2_T<T> operator / (const T     v)		const { vec2_T<T> r; r.x = this->x / v;   r.y = this->y / v;	return r; }
+
+		template <typename U>
+		vec2_T<T> operator + (const vec2_T<U>& p) const
+		{
+			return vec2_T<T>(
+				this->x + static_cast<T>(p.x),
+				this->y + static_cast<T>(p.y));
+		}
+
+		template <typename U>
+		vec2_T<T> operator - (const vec2_T<U>& p) const
+		{
+			return vec2_T<T>(
+				this->x - static_cast<T>(p.x),
+				this->y - static_cast<T>(p.y));
+		}
+
+		template <typename U>
+		vec2_T<T> operator * (const vec2_T<U>& p) const
+		{
+			return vec2_T<T>(
+				this->x * static_cast<T>(p.x),
+				this->y * static_cast<T>(p.y));
+		}
+
+		template <typename U>
+		vec2_T<T> operator / (const vec2_T<U>& p) const
+		{
+			return vec2_T<T>(
+				this->x / static_cast<T>(p.x),
+				this->y / static_cast<T>(p.y));
+		}
 
 		T& operator [] (size_t i)
 		{
